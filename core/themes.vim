@@ -1,4 +1,7 @@
 let s:theme_setup_dict = {}
+if has('termguicolors')
+    set termguicolors
+endif
 
 function! s:theme_setup_dict.gruvbox8() dict abort
   " Italic options should be put before colorscheme setting,
@@ -14,11 +17,31 @@ function! s:theme_setup_dict.onedark() dict abort
   colorscheme onedark
 endfunction
 
+"----------------------------------------------------------------------------------------------
+" PLUGIN SETTINGS: Edge
+"---------------------------------------------------------------------------------------------
 function! s:theme_setup_dict.edge() dict abort
   let g:edge_enable_italic = 1
   let g:edge_better_performance = 1
-  colorscheme edge
+" Important!!
+
+" The configuration options should be placed before `colorscheme edge`.
+let g:edge_current_word              = 'bold'
+let g:edge_diagnostic_line_highlight = 1
+let g:edge_diagnostic_text_highlight = 1
+let g:edge_diagnostic_virtual_text   = 'colored'
+let g:edge_disable_italic_comment    = 1
+let g:edge_enable_italic             = 1
+let g:edge_menu_selection_background = 'blue'
+let g:edge_spell_foreground          = 'colored'
+let g:edge_style                     = 'default'
+let g:edge_transparent_background    = 1
+
+let g:colorscheme = 'edge'
+colorscheme edge
 endfunction
+
+
 
 function! s:theme_setup_dict.sonokai() dict abort
   let g:sonokai_enable_italic = 1
@@ -69,7 +92,10 @@ let s:theme2dir = {
       \ 'kanagawa': 'kanagawa.nvim',
       \ }
 
-let s:theme = utils#RandElement(keys(s:theme2dir))
+" let s:theme = utils#RandElement(keys(s:theme2dir))
+" let s:these = 'edge'
+let s:theme = 'edge'
+let s:these = 'edge'
 let s:colorscheme_func = printf('s:theme_setup_dict.%s()', s:theme)
 
 if !has_key(s:theme_setup_dict, s:theme)

@@ -16,6 +16,7 @@ augroup END
 " More accurate syntax highlighting? (see `:h syn-sync`)
 augroup accurate_syn_highlight
   autocmd!
+  autocmd BufEnter * :syntax on
   autocmd BufEnter * :syntax sync fromstart
 augroup END
 
@@ -59,12 +60,6 @@ augroup auto_read
   autocmd!
   autocmd FileChangedShellPost * call v:lua.vim.notify("File changed on disk. Buffer reloaded!", 'warn', {'title': 'nvim-config'})
   autocmd FocusGained,CursorHold * if getcmdwintype() == '' | checktime | endif
-augroup END
-
-augroup numbertoggle
-  autocmd!
-  autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu | set rnu   | endif
-  autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu | set nornu | endif
 augroup END
 
 " Define or override some highlight groups

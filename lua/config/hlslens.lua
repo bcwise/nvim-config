@@ -3,32 +3,19 @@ require('hlslens').setup({
     nearest_only = true,
 })
 
-local activate_hlslens = function(direction)
-  local cmd = string.format("normal! %s%szzzv", vim.v.count1, direction)
-  local status, msg = pcall(vim.fn.execute, cmd)
-  -- 13 is the index where real error message starts
-  msg = msg:sub(13)
+vim.api.nvim_set_keymap(
+  "n",
+  "n",
+  "<Cmd>execute('normal! ' . v:count1 . 'nzzzv')<CR><Cmd>lua require('hlslens').start()<CR>",
+  { noremap = true, silent = true }
+)
 
-  if not status then
-    vim.api.nvim_echo({{msg, "ErrorMsg"}}, false, {})
-    return
-  end
-  require('hlslens').start()
-end
+vim.api.nvim_set_keymap(
+  "n",
+  "N",
+  "<Cmd>execute('normal! ' . v:count1 . 'Nzzzv')<CR><Cmd>lua require('hlslens').start()<CR>",
+  { noremap = true, silent = true }
+)
 
-vim.keymap.set('n', 'n', '',
-{
-  noremap = true,
-  silent = true,
-  callback = function() activate_hlslens('n') end
-})
-
-vim.keymap.set('n', 'N', '',
-{
-  noremap = true,
-  silent = true,
-  callback = function() activate_hlslens('N') end
-})
-
-vim.keymap.set('n', '*', "<Plug>(asterisk-z*)<Cmd>lua require('hlslens').start()<CR>", { silent = true })
-vim.keymap.set('n', '#', "<Plug>(asterisk-z#)<Cmd>lua require('hlslens').start()<CR>", { silent = true })
+vim.api.nvim_set_keymap("n", "*", "<Plug>(asterisk-z*)<Cmd>lua require('hlslens').start()<CR>", { silent = true })
+vim.api.nvim_set_keymap("n", "#", "<Plug>(asterisk-z#)<Cmd>lua require('hlslens').start()<CR>", { silent = true })
